@@ -28,15 +28,12 @@ export default function Hero() {
   };
 
   return (
-    <section className="relative min-h-[90vh] flex flex-col justify-center px-6 md:px-0 pt-20">
-      {/* Background Subtle Gradient Glow */}
-      <div className="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[350px] h-[350px] md:w-[600px] md:h-[600px] bg-neutral-200/40 dark:bg-neutral-900/30 rounded-full blur-[80px] md:blur-[120px] pointer-events-none -z-10" />
-
+    <section className="relative flex min-h-[calc(100svh-4rem)] flex-col justify-center overflow-hidden px-6 pb-20 pt-32 sm:px-8 sm:pb-24 lg:min-h-[92vh] lg:px-0">
       <motion.div
         variants={containerVariants}
         initial="hidden"
         animate="visible"
-        className="mx-auto max-w-3xl w-full flex flex-col gap-6 md:gap-8"
+        className="mx-auto flex w-full max-w-4xl flex-col gap-6 sm:gap-8"
       >
         {/* Status Badge */}
         <motion.div variants={itemVariants} className="inline-flex">
@@ -52,7 +49,7 @@ export default function Hero() {
         {/* Heading */}
         <motion.h1
           variants={itemVariants}
-          className="text-4xl sm:text-5xl md:text-6xl font-bold tracking-tight text-foreground leading-[1.1] sm:leading-[1.05]"
+          className="max-w-4xl text-4xl font-bold leading-[1.08] tracking-tight text-foreground sm:text-6xl lg:text-7xl"
         >
           Desenvolvendo sistemas robustos, da infraestrutura à interface.
         </motion.h1>
@@ -60,7 +57,7 @@ export default function Hero() {
         {/* Introduction Text */}
         <motion.p
           variants={itemVariants}
-          className="text-lg sm:text-xl text-muted leading-relaxed max-w-2xl"
+          className="max-w-3xl text-lg leading-relaxed text-muted sm:text-xl"
         >
           Olá, eu sou o <span className="text-foreground font-medium">Henrique</span>. Estudo Engenharia de Software e crio soluções completas utilizando arquiteturas robustas em <strong className="font-semibold text-foreground">Spring Boot (Java)</strong>, persistência de alto desempenho com <strong className="font-semibold text-foreground">PostgreSQL (Supabase)</strong> e experiências de usuário ultrafluidas com <strong className="font-semibold text-foreground">Next.js</strong>.
         </motion.p>
@@ -90,6 +87,24 @@ export default function Hero() {
             Falar Comigo
           </motion.a>
         </motion.div>
+
+        <motion.dl
+          variants={itemVariants}
+          className="grid max-w-4xl grid-cols-1 gap-3 pt-4 text-sm sm:grid-cols-3 sm:pt-6"
+        >
+          <div className="flex flex-col gap-1 rounded-lg border border-border/50 bg-card/35 p-4">
+            <dt className="font-semibold text-foreground">Backend</dt>
+            <dd className="leading-relaxed text-muted">Java, Spring Boot e APIs REST.</dd>
+          </div>
+          <div className="flex flex-col gap-1 rounded-lg border border-border/50 bg-card/35 p-4">
+            <dt className="font-semibold text-foreground">Interface</dt>
+            <dd className="leading-relaxed text-muted">Next.js, React e Tailwind CSS.</dd>
+          </div>
+          <div className="flex flex-col gap-1 rounded-lg border border-border/50 bg-card/35 p-4">
+            <dt className="font-semibold text-foreground">Dados</dt>
+            <dd className="leading-relaxed text-muted">PostgreSQL, SQL e análise estatística.</dd>
+          </div>
+        </motion.dl>
       </motion.div>
     </section>
   );

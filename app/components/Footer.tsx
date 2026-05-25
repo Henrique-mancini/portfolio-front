@@ -2,8 +2,8 @@ export default function Footer() {
   const currentYear = new Date().getFullYear();
 
   return (
-    <footer className="border-t border-border/40 py-12 px-6 md:px-0 mt-auto bg-card/10">
-      <div className="mx-auto max-w-3xl w-full flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-muted">
+    <footer className="mt-auto bg-card/10 px-6 py-10 sm:px-8 lg:px-0">
+      <div className="mx-auto flex w-full max-w-4xl flex-col items-center justify-between gap-4 text-xs text-muted sm:flex-row">
         <div>
           <p>
             &copy; {currentYear} Henrique Mancini. Todos os direitos reservados.

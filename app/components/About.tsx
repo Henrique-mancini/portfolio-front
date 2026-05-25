@@ -1,7 +1,3 @@
-"use client";
-
-import { motion } from "framer-motion";
-
 export default function About() {
   const skills = [
     {
@@ -19,8 +15,8 @@ export default function About() {
   ];
 
   return (
-    <section id="sobre" className="py-24 border-t border-border/40 px-6 md:px-0">
-      <div className="mx-auto max-w-3xl w-full">
+    <section id="sobre" className="scroll-mt-28 px-6 py-20 sm:px-8 sm:py-24 lg:px-0">
+      <div className="mx-auto max-w-4xl w-full">
         {/* Section Title */}
         <div className="flex flex-col gap-2 mb-12">
           <h2 className="text-xs font-semibold uppercase tracking-wider text-muted">

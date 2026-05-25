@@ -18,6 +18,7 @@ export default function Header() {
   const menuItems = [
     { label: "Projetos", href: "#projetos" },
     { label: "Sobre", href: "#sobre" },
+    { label: "Certificados", href: "#certificados" },
     { label: "Contato", href: "#contato" },
   ];
 
@@ -28,11 +29,11 @@ export default function Header() {
       transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
         isScrolled
-          ? "bg-background/80 backdrop-blur-md border-b border-border py-4"
+          ? "bg-background/85 py-4 backdrop-blur-md"
           : "bg-transparent py-6"
       }`}
     >
-      <div className="mx-auto max-w-5xl px-6 flex items-center justify-between">
+      <div className="mx-auto flex w-full max-w-4xl items-center justify-between px-6 sm:px-8 lg:px-0">
         <a
           href="#"
           className="text-lg font-semibold tracking-tight text-foreground select-none"
@@ -41,7 +42,7 @@ export default function Header() {
         </a>
 
         {/* Desktop Navigation */}
-        <nav className="hidden md:flex items-center gap-8">
+        <nav className="hidden md:flex items-center gap-7">
           {menuItems.map((item) => (
             <a
               key={item.label}
@@ -87,9 +88,9 @@ export default function Header() {
             animate={{ opacity: 1, height: "auto" }}
             exit={{ opacity: 0, height: 0 }}
             transition={{ duration: 0.3, ease: "easeInOut" }}
-            className="md:hidden border-b border-border bg-background/95 backdrop-blur-md"
+            className="md:hidden bg-background/95 backdrop-blur-md"
           >
-            <nav className="flex flex-col px-6 py-4 gap-4">
+            <nav className="mx-auto flex w-full max-w-4xl flex-col gap-4 px-6 py-4 sm:px-8 lg:px-0">
               {menuItems.map((item) => (
                 <a
                   key={item.label}
