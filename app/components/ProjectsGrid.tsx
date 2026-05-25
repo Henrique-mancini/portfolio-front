@@ -114,16 +114,20 @@ export default function ProjectsGrid() {
   };
 
   return (
-    <section id="projetos" className="scroll-mt-28 px-6 pb-20 pt-12 sm:px-8 sm:pb-24 sm:pt-14 lg:px-0">
+    <section
+      id="projetos"
+      aria-labelledby="projects-heading"
+      className="scroll-mt-28 px-6 pb-20 pt-12 sm:px-8 sm:pb-24 sm:pt-14 lg:px-0"
+    >
       <div className="mx-auto max-w-4xl w-full">
         {/* Section Title */}
         <div className="flex flex-col gap-2 mb-10 sm:mb-12">
-          <h2 className="text-xs font-semibold uppercase tracking-wider text-muted">
+          <p className="text-xs font-semibold uppercase tracking-wider text-muted">
             Estudos de Caso
-          </h2>
-          <p className="text-2xl sm:text-3xl font-bold tracking-tight text-foreground">
-            Arquitetura e Projetos Recentes
           </p>
+          <h2 id="projects-heading" className="text-2xl sm:text-3xl font-bold tracking-tight text-foreground">
+            Arquitetura e Projetos Recentes
+          </h2>
         </div>
 
         {/* Grid List */}

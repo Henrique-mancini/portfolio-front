@@ -95,17 +95,22 @@ export default function ContactForm() {
   };
 
   return (
-    <section id="contato" className="scroll-mt-28 px-6 py-20 sm:px-8 sm:py-24 lg:px-0">
+    <section
+      id="contato"
+      aria-labelledby="contact-heading"
+      aria-describedby="contact-description"
+      className="scroll-mt-28 px-6 py-20 sm:px-8 sm:py-24 lg:px-0"
+    >
       <div className="mx-auto max-w-4xl w-full">
         {/* Section Title */}
         <div className="flex flex-col gap-2 mb-12">
-          <h2 className="text-xs font-semibold uppercase tracking-wider text-muted">
+          <p className="text-xs font-semibold uppercase tracking-wider text-muted">
             Contato
-          </h2>
-          <p className="text-2xl font-bold tracking-tight text-foreground">
-            Vamos trabalhar juntos
           </p>
-          <p className="text-sm text-muted max-w-md mt-1">
+          <h2 id="contact-heading" className="text-2xl font-bold tracking-tight text-foreground">
+            Vamos trabalhar juntos
+          </h2>
+          <p id="contact-description" className="text-sm text-muted max-w-md mt-1">
             Preencha o formulário abaixo ou envie uma mensagem diretamente para iniciar nossa conversa.
           </p>
         </div>
@@ -115,18 +120,18 @@ export default function ContactForm() {
           {/* Info Side */}
           <div className="md:col-span-2 flex flex-col gap-6 text-sm text-muted">
             <div>
-              <h4 className="font-semibold text-foreground mb-1">E-mail</h4>
+              <h3 className="font-semibold text-foreground mb-1">E-mail</h3>
               <a href="mailto:henrique.malafaia@gmail.com" className="hover:text-foreground transition-colors block">
                 henrique.malafaia@gmail.com
               </a>
             </div>
             <div>
-              <h4 className="font-semibold text-foreground mb-1">Localização</h4>
+              <h3 className="font-semibold text-foreground mb-1">Localização</h3>
               <p>Juiz de Fora, MG</p>
               <p>Brasil</p>
             </div>
             <div>
-              <h4 className="font-semibold text-foreground mb-1">Redes</h4>
+              <h3 className="font-semibold text-foreground mb-1">Redes</h3>
               <a 
                 href="https://www.linkedin.com/in/henriquemancinii" 
                 target="_blank" 

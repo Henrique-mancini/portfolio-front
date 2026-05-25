@@ -133,9 +133,9 @@ function CertificatePreview({ certificate, large = false }: { certificate: Certi
         </div>
 
         <div>
-          <h3 className={`${large ? "text-2xl sm:text-3xl" : "text-base"} font-semibold tracking-tight text-foreground`}>
+          <p className={`${large ? "text-2xl sm:text-3xl" : "text-base"} font-semibold tracking-tight text-foreground`}>
             {certificate.title}
-          </h3>
+          </p>
           <p className={`${large ? "mt-3 text-sm" : "mt-2 text-xs"} text-muted`}>
             Henrique Mancini
           </p>
@@ -165,15 +165,19 @@ export default function Certificates() {
   const [selectedCertificate, setSelectedCertificate] = useState<Certificate | null>(null);
 
   return (
-    <section id="certificados" className="scroll-mt-28 px-6 py-20 sm:px-8 sm:py-24 lg:px-0">
+    <section
+      id="certificados"
+      aria-labelledby="certificates-heading"
+      className="scroll-mt-28 px-6 py-20 sm:px-8 sm:py-24 lg:px-0"
+    >
       <div className="mx-auto w-full max-w-4xl">
         <div className="mb-10 flex flex-col gap-2 sm:mb-12">
-          <h2 className="text-xs font-semibold uppercase tracking-wider text-muted">
+          <p className="text-xs font-semibold uppercase tracking-wider text-muted">
             Certificados
-          </h2>
-          <p className="text-2xl font-bold tracking-tight text-foreground sm:text-3xl">
-            Formação complementar e credenciais
           </p>
+          <h2 id="certificates-heading" className="text-2xl font-bold tracking-tight text-foreground sm:text-3xl">
+            Formação complementar e credenciais
+          </h2>
         </div>
 
         <motion.div
@@ -201,14 +205,14 @@ export default function Certificates() {
 
               <CertificatePreview certificate={certificate} />
 
-              <span className="flex min-w-0 flex-col gap-2">
-                <span className="break-words text-base font-semibold leading-snug tracking-tight text-foreground">
+              <div className="flex min-w-0 flex-col gap-2">
+                <h3 className="break-words text-base font-semibold leading-snug tracking-tight text-foreground">
                   {certificate.title}
-                </span>
-                <span className="text-sm leading-relaxed text-muted">
+                </h3>
+                <p className="text-sm leading-relaxed text-muted">
                   {certificate.description}
-                </span>
-              </span>
+                </p>
+              </div>
 
               <span className="flex flex-wrap gap-2">
                 {certificate.skills.map((skill) => (

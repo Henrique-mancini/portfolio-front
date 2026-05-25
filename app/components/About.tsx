@@ -15,16 +15,20 @@ export default function About() {
   ];
 
   return (
-    <section id="sobre" className="scroll-mt-28 px-6 py-20 sm:px-8 sm:py-24 lg:px-0">
+    <section
+      id="sobre"
+      aria-labelledby="about-heading"
+      className="scroll-mt-28 px-6 py-20 sm:px-8 sm:py-24 lg:px-0"
+    >
       <div className="mx-auto max-w-4xl w-full">
         {/* Section Title */}
         <div className="flex flex-col gap-2 mb-12">
-          <h2 className="text-xs font-semibold uppercase tracking-wider text-muted">
+          <p className="text-xs font-semibold uppercase tracking-wider text-muted">
             Sobre Mim
-          </h2>
-          <p className="text-2xl font-bold tracking-tight text-foreground">
-            Formação e Competências
           </p>
+          <h2 id="about-heading" className="text-2xl font-bold tracking-tight text-foreground">
+            Formação e Competências
+          </h2>
         </div>
 
         {/* Content Layout */}
@@ -43,9 +47,9 @@ export default function About() {
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 pt-6 border-t border-border/20">
             {skills.map((skillGroup) => (
               <div key={skillGroup.category} className="flex flex-col gap-3">
-                <h4 className="text-sm font-semibold text-foreground tracking-tight">
+                <h3 className="text-sm font-semibold text-foreground tracking-tight">
                   {skillGroup.category}
-                </h4>
+                </h3>
                 <ul className="flex flex-col gap-2">
                   {skillGroup.items.map((skill) => (
                     <li 
