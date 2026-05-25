@@ -9,6 +9,15 @@ interface FormState {
   message: string;
 }
 
+type FormField = keyof FormState;
+type FormStatus = "idle" | "loading" | "success" | "error";
+
+const fieldErrorIds: Record<FormField, string> = {
+  name: "contact-name-error",
+  email: "contact-email-error",
+  message: "contact-message-error",
+};
+
 export default function ContactForm() {
   const [formData, setFormData] = useState<FormState>({
     name: "",
@@ -16,24 +25,62 @@ export default function ContactForm() {
     message: "",
   });
   
-  const [status, setStatus] = useState<"idle" | "loading" | "success" | "error">("idle");
+  const [status, setStatus] = useState<FormStatus>("idle");
   const [errors, setErrors] = useState<Partial<FormState>>({});
 
   const validate = (): boolean => {
     const newErrors: Partial<FormState> = {};
-    if (!formData.name.trim()) newErrors.name = "O nome é obrigatório.";
+
+    if (!formData.name.trim()) {
+      newErrors.name = "O nome é obrigatório.";
+    } else if (formData.name.trim().length < 2) {
+      newErrors.name = "Informe um nome com pelo menos 2 caracteres.";
+    }
+
     if (!formData.email.trim()) {
       newErrors.email = "O email é obrigatório.";
     } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)) {
       newErrors.email = "Formato de email inválido.";
     }
-    if (!formData.message.trim()) newErrors.message = "A mensagem é obrigatória.";
+
+    if (!formData.message.trim()) {
+      newErrors.message = "A mensagem é obrigatória.";
+    } else if (formData.message.trim().length < 10) {
+      newErrors.message = "Escreva uma mensagem com pelo menos 10 caracteres.";
+    }
 
     setErrors(newErrors);
-    return Object.keys(newErrors).length === 0;
+    const isValid = Object.keys(newErrors).length === 0;
+
+    if (!isValid) {
+      setStatus("error");
+    }
+
+    return isValid;
   };
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleFieldChange = (field: FormField, value: string) => {
+    setFormData((currentFormData) => ({
+      ...currentFormData,
+      [field]: value,
+    }));
+
+    setErrors((currentErrors) => {
+      if (!currentErrors[field]) {
+        return currentErrors;
+      }
+
+      const updatedErrors = { ...currentErrors };
+      delete updatedErrors[field];
+      return updatedErrors;
+    });
+
+    if (status !== "loading") {
+      setStatus("idle");
+    }
+  };
+
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (!validate()) return;
 
@@ -42,6 +89,7 @@ export default function ContactForm() {
     // Simulating API integration
     setTimeout(() => {
       setStatus("success");
+      setErrors({});
       setFormData({ name: "", email: "", message: "" });
     }, 1500);
   };
@@ -100,7 +148,14 @@ export default function ContactForm() {
 
           {/* Form Side */}
           <div className="md:col-span-3">
-            <form onSubmit={handleSubmit} className="flex flex-col gap-5">
+            <form
+              onSubmit={handleSubmit}
+              className="flex flex-col gap-5"
+              noValidate
+              aria-describedby={
+                status === "success" || status === "error" ? "contact-form-status" : undefined
+              }
+            >
               {/* Name */}
               <div className="flex flex-col gap-1.5">
                 <label htmlFor="name" className="text-xs font-medium text-muted">
@@ -108,9 +163,15 @@ export default function ContactForm() {
                 </label>
                 <input
                   id="name"
+                  name="name"
                   type="text"
+                  autoComplete="name"
+                  required
+                  minLength={2}
                   value={formData.name}
-                  onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+                  onChange={(e) => handleFieldChange("name", e.target.value)}
+                  aria-invalid={Boolean(errors.name)}
+                  aria-describedby={errors.name ? fieldErrorIds.name : undefined}
                   className={`w-full rounded-lg border bg-card/25 px-4 py-2.5 text-sm text-foreground outline-none transition-all ${
                     errors.name 
                       ? "border-red-500/50 focus:border-red-500 focus:ring-1 focus:ring-red-500" 
@@ -119,7 +180,9 @@ export default function ContactForm() {
                   placeholder="Seu nome"
                 />
                 {errors.name && (
-                  <span className="text-xs text-red-500">{errors.name}</span>
+                  <span id={fieldErrorIds.name} className="text-xs text-red-500">
+                    {errors.name}
+                  </span>
                 )}
               </div>
 
@@ -130,9 +193,14 @@ export default function ContactForm() {
                 </label>
                 <input
                   id="email"
+                  name="email"
                   type="email"
+                  autoComplete="email"
+                  required
                   value={formData.email}
-                  onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+                  onChange={(e) => handleFieldChange("email", e.target.value)}
+                  aria-invalid={Boolean(errors.email)}
+                  aria-describedby={errors.email ? fieldErrorIds.email : undefined}
                   className={`w-full rounded-lg border bg-card/25 px-4 py-2.5 text-sm text-foreground outline-none transition-all ${
                     errors.email 
                       ? "border-red-500/50 focus:border-red-500 focus:ring-1 focus:ring-red-500" 
@@ -141,7 +209,9 @@ export default function ContactForm() {
                   placeholder="voce@exemplo.com"
                 />
                 {errors.email && (
-                  <span className="text-xs text-red-500">{errors.email}</span>
+                  <span id={fieldErrorIds.email} className="text-xs text-red-500">
+                    {errors.email}
+                  </span>
                 )}
               </div>
 
@@ -152,9 +222,14 @@ export default function ContactForm() {
                 </label>
                 <textarea
                   id="message"
+                  name="message"
                   rows={4}
+                  required
+                  minLength={10}
                   value={formData.message}
-                  onChange={(e) => setFormData({ ...formData, message: e.target.value })}
+                  onChange={(e) => handleFieldChange("message", e.target.value)}
+                  aria-invalid={Boolean(errors.message)}
+                  aria-describedby={errors.message ? fieldErrorIds.message : undefined}
                   className={`w-full rounded-lg border bg-card/25 px-4 py-2.5 text-sm text-foreground outline-none transition-all resize-none ${
                     errors.message 
                       ? "border-red-500/50 focus:border-red-500 focus:ring-1 focus:ring-red-500" 
@@ -163,7 +238,9 @@ export default function ContactForm() {
                   placeholder="Como posso te ajudar?"
                 />
                 {errors.message && (
-                  <span className="text-xs text-red-500">{errors.message}</span>
+                  <span id={fieldErrorIds.message} className="text-xs text-red-500">
+                    {errors.message}
+                  </span>
                 )}
               </div>
 
@@ -174,10 +251,17 @@ export default function ContactForm() {
                   whileTap={{ scale: 0.99 }}
                   type="submit"
                   disabled={status === "loading"}
+                  aria-busy={status === "loading"}
                   className="w-full flex h-11 items-center justify-center rounded-lg bg-accent text-sm font-semibold text-accent-foreground shadow-sm hover:opacity-90 transition-opacity disabled:opacity-50"
                 >
                   {status === "loading" ? (
-                    <div className="h-5 w-5 animate-spin rounded-full border-2 border-accent-foreground border-t-transparent" />
+                    <>
+                      <span
+                        aria-hidden="true"
+                        className="h-5 w-5 animate-spin rounded-full border-2 border-accent-foreground border-t-transparent"
+                      />
+                      <span className="sr-only">Enviando mensagem</span>
+                    </>
                   ) : (
                     "Enviar Mensagem"
                   )}
@@ -185,14 +269,23 @@ export default function ContactForm() {
               </div>
 
               <AnimatePresence>
-                {status === "success" && (
+                {(status === "success" || status === "error") && (
                   <motion.div
+                    id="contact-form-status"
                     initial={{ opacity: 0, y: 10 }}
                     animate={{ opacity: 1, y: 0 }}
                     exit={{ opacity: 0, y: 10 }}
-                    className="p-4 rounded-lg bg-emerald-500/10 border border-emerald-500/20 text-emerald-600 dark:text-emerald-400 text-sm font-medium text-center"
+                    role={status === "error" ? "alert" : "status"}
+                    aria-live={status === "error" ? "assertive" : "polite"}
+                    className={`p-4 rounded-lg border text-sm font-medium text-center ${
+                      status === "success"
+                        ? "bg-emerald-500/10 border-emerald-500/20 text-emerald-600 dark:text-emerald-400"
+                        : "bg-red-500/10 border-red-500/20 text-red-600 dark:text-red-400"
+                    }`}
                   >
-                    Mensagem enviada com sucesso! Entrarei em contato em breve.
+                    {status === "success"
+                      ? "Mensagem enviada com sucesso! Entrarei em contato em breve."
+                      : "Revise os campos destacados antes de enviar."}
                   </motion.div>
                 )}
               </AnimatePresence>
