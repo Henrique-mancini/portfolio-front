@@ -6,14 +6,30 @@ import { motion, AnimatePresence } from "framer-motion";
 export default function Header() {
   const [isScrolled, setIsScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const mobileMenuId = "mobile-navigation";
 
   useEffect(() => {
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 20);
     };
-    window.addEventListener("scroll", handleScroll);
+    window.addEventListener("scroll", handleScroll, { passive: true });
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
+
+  useEffect(() => {
+    if (!mobileMenuOpen) {
+      return;
+    }
+
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.key === "Escape") {
+        setMobileMenuOpen(false);
+      }
+    };
+
+    window.addEventListener("keydown", handleKeyDown);
+    return () => window.removeEventListener("keydown", handleKeyDown);
+  }, [mobileMenuOpen]);
 
   const menuItems = [
     { label: "Projetos", href: "#projetos" },
@@ -36,18 +52,19 @@ export default function Header() {
       <div className="mx-auto flex w-full max-w-4xl items-center justify-between px-6 sm:px-8 lg:px-0">
         <a
           href="#"
-          className="text-lg font-semibold tracking-tight text-foreground select-none"
+          aria-label="Voltar ao início da página"
+          className="text-lg font-semibold tracking-tight text-foreground select-none rounded-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-foreground"
         >
           Henrique <span className="text-muted/80 font-normal">Mancini</span>
         </a>
 
         {/* Desktop Navigation */}
-        <nav className="hidden md:flex items-center gap-7">
+        <nav aria-label="Navegação principal" className="hidden md:flex items-center gap-7">
           {menuItems.map((item) => (
             <a
               key={item.label}
               href={item.href}
-              className="text-sm font-medium text-muted hover:text-foreground transition-colors duration-200"
+              className="rounded-sm text-sm font-medium text-muted transition-colors duration-200 hover:text-foreground focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-foreground"
             >
               {item.label}
             </a>
@@ -56,11 +73,14 @@ export default function Header() {
 
         {/* Mobile Menu Button */}
         <button
+          type="button"
           onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-          className="md:hidden p-2 text-foreground focus:outline-none"
-          aria-label="Toggle menu"
+          className="md:hidden rounded-full p-2 text-foreground transition-colors hover:bg-foreground/5 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-foreground"
+          aria-label={mobileMenuOpen ? "Fechar menu de navegação" : "Abrir menu de navegação"}
+          aria-expanded={mobileMenuOpen}
+          aria-controls={mobileMenuId}
         >
-          <div className="w-6 h-5 flex flex-col justify-between">
+          <div aria-hidden="true" className="w-6 h-5 flex flex-col justify-between">
             <span
               className={`h-0.5 w-full bg-current rounded-full transition-transform duration-300 origin-left ${
                 mobileMenuOpen ? "rotate-45" : ""
@@ -84,19 +104,23 @@ export default function Header() {
       <AnimatePresence>
         {mobileMenuOpen && (
           <motion.div
+            id={mobileMenuId}
             initial={{ opacity: 0, height: 0 }}
             animate={{ opacity: 1, height: "auto" }}
             exit={{ opacity: 0, height: 0 }}
             transition={{ duration: 0.3, ease: "easeInOut" }}
             className="md:hidden bg-background/95 backdrop-blur-md"
           >
-            <nav className="mx-auto flex w-full max-w-4xl flex-col gap-4 px-6 py-4 sm:px-8 lg:px-0">
+            <nav
+              aria-label="Navegação principal mobile"
+              className="mx-auto flex w-full max-w-4xl flex-col gap-4 px-6 py-4 sm:px-8 lg:px-0"
+            >
               {menuItems.map((item) => (
                 <a
                   key={item.label}
                   href={item.href}
                   onClick={() => setMobileMenuOpen(false)}
-                  className="text-base font-medium text-muted hover:text-foreground py-2 border-b border-border/40 last:border-0 transition-colors"
+                  className="rounded-sm border-b border-border/40 py-2 text-base font-medium text-muted transition-colors last:border-0 hover:text-foreground focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-foreground"
                 >
                   {item.label}
                 </a>
