@@ -114,7 +114,7 @@ export default function ProjectsGrid() {
   };
 
   return (
-    <section id="projetos" className="scroll-mt-28 px-6 py-20 sm:px-8 sm:py-24 lg:px-0">
+    <section id="projetos" className="scroll-mt-28 px-6 pb-20 pt-12 sm:px-8 sm:pb-24 sm:pt-14 lg:px-0">
       <div className="mx-auto max-w-4xl w-full">
         {/* Section Title */}
         <div className="flex flex-col gap-2 mb-10 sm:mb-12">

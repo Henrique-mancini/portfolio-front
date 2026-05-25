@@ -28,7 +28,7 @@ export default function Hero() {
   };
 
   return (
-    <section className="relative flex min-h-[calc(100svh-4rem)] flex-col justify-center overflow-hidden px-6 pb-20 pt-32 sm:px-8 sm:pb-24 lg:min-h-[92vh] lg:px-0">
+    <section className="relative flex flex-col overflow-hidden px-6 pb-14 pt-28 sm:px-8 sm:pb-16 sm:pt-32 lg:px-0 lg:pb-20">
       <motion.div
         variants={containerVariants}
         initial="hidden"

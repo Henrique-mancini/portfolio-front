@@ -76,17 +76,18 @@ const containerVariants: Variants = {
 };
 
 const previewLines = [100, 86, 72];
+const certificateAspectRatio = "aspect-[595/842]";
 
 function CertificatePreview({ certificate, large = false }: { certificate: Certificate; large?: boolean }) {
   if (certificate.previewImageUrl && !large) {
     return (
-      <div className="relative aspect-[1.42/1] overflow-hidden rounded-md border border-border bg-white">
+      <div className={`relative ${certificateAspectRatio} overflow-hidden rounded-md border border-border bg-white`}>
         <Image
           src={certificate.previewImageUrl}
           alt={`Prévia do certificado ${certificate.title}`}
           fill
           sizes="(min-width: 1024px) 280px, 100vw"
-          className="object-contain p-2"
+          className="object-contain"
         />
       </div>
     );
@@ -96,7 +97,7 @@ function CertificatePreview({ certificate, large = false }: { certificate: Certi
     return (
       <div
         className={`overflow-hidden rounded-md border border-border bg-background ${
-          large ? "h-[68vh] min-h-[420px]" : "aspect-[1.42/1]"
+          large ? "h-[68vh] min-h-[420px]" : certificateAspectRatio
         }`}
       >
         <iframe
@@ -111,7 +112,7 @@ function CertificatePreview({ certificate, large = false }: { certificate: Certi
   return (
     <div
       className={`relative overflow-hidden rounded-md border border-border bg-background ${
-        large ? "aspect-[1.42/1] p-8 sm:p-10" : "aspect-[1.42/1] p-5"
+        large ? `${certificateAspectRatio} p-8 sm:p-10` : `${certificateAspectRatio} p-5`
       }`}
     >
       <div className="absolute inset-3 rounded-sm border border-border/50" />
