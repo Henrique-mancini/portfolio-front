@@ -49,7 +49,7 @@ export default function Header() {
           : "bg-transparent py-6"
       }`}
     >
-      <div className="mx-auto flex w-full max-w-4xl items-center justify-between px-6 sm:px-8 lg:px-0">
+      <div className="mx-auto flex w-full max-w-5xl items-center justify-between px-6 sm:px-8 lg:px-0">
         <a
           href="#"
           aria-label="Voltar ao início da página"
@@ -113,7 +113,7 @@ export default function Header() {
           >
             <nav
               aria-label="Navegação principal mobile"
-              className="mx-auto flex w-full max-w-4xl flex-col gap-4 px-6 py-4 sm:px-8 lg:px-0"
+              className="mx-auto flex w-full max-w-5xl flex-col gap-4 px-6 py-4 sm:px-8 lg:px-0"
             >
               {menuItems.map((item) => (
                 <a
