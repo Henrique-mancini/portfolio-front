@@ -34,6 +34,7 @@ export default function Header() {
   const menuItems = [
     { label: "Projetos", href: "#projetos" },
     { label: "Sobre", href: "#sobre" },
+    { label: "Experiência", href: "#experiencia" },
     { label: "Certificados", href: "#certificados" },
     { label: "Contato", href: "#contato" },
   ];

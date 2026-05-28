@@ -1,6 +1,7 @@
 import Hero from "./components/Hero";
 import ProjectsGrid from "./components/ProjectsGrid";
 import About from "./components/About";
+import Experience from "./components/Experience";
 import Certificates from "./components/Certificates";
 import ContactForm from "./components/ContactForm";
 import AnimatedSection from "./components/AnimatedSection";
@@ -19,6 +20,11 @@ export default function Home() {
       {/* About Section with scroll reveal */}
       <AnimatedSection>
         <About />
+      </AnimatedSection>
+
+      {/* Experience Section with scroll reveal */}
+      <AnimatedSection>
+        <Experience />
       </AnimatedSection>
 
       {/* Certificates Section with scroll reveal */}
